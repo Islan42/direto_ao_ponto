@@ -22,19 +22,17 @@ class Funcao(models.Model):
         return self.nome
 
 class CandidatoTemFuncao(models.Model):
-    id_candidato = models.ForeignKey(Candidato, on_delete=models.CASCADE)
-    id_funcao = models.ForeignKey(Funcao, on_delete=models.CASCADE)
+    candidato = models.ForeignKey(Candidato, on_delete=models.CASCADE)
+    funcao = models.ForeignKey(Funcao, on_delete=models.CASCADE)
 
     def __str__(self):
-        candidato = self.id_candidato
-        funcao = self.id_funcao
-        return f"{candidato.nome} - {funcao.nome}"
+        return f"{self.candidato.nome} - {self.funcao.nome}"
 
 class TelefoneCandidato(models.Model):
-    id_candidato = models.ForeignKey(Candidato, on_delete=models.CASCADE)
+    candidato = models.ForeignKey(Candidato, on_delete=models.CASCADE)
     telefone = models.CharField(max_length=15)
 
     def __str__(self):
-        candidato = self.id_candidato
-        return f"{self.telefone} - {candidato.nome}"
+        
+        return f"{self.telefone} - {self.candidato.nome}"
 

@@ -16,18 +16,17 @@ class Empresa(models.Model):
         return f"{self.razao_social} - {self.cnpj}"
 
 class Recrutador(models.Model):
-    id_empresa = models.ForeignKey(Empresa, on_delete=models.PROTECT)
+    empresa = models.ForeignKey(Empresa, on_delete=models.PROTECT)
     ativo = models.BooleanField()
     nome = models.CharField(max_length=200)
     email = models.CharField(max_length=200)
     criado_em = models.DateTimeField()
 
     def __str__(self):
-        empresa = self.id_empresa
-        return f"{self.nome} - {empresa.razao_social}"
+        return f"{self.nome} - {self.empresa.razao_social}"
 
 class ProcessoSeletivo(models.Model):
-    id_recrutador = models.ForeignKey(Recrutador, on_delete=models.PROTECT)
+    recrutador = models.ForeignKey(Recrutador, on_delete=models.PROTECT)
     processo_pai = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True)
     ativo = models.BooleanField()
     titulo = models.CharField(max_length=255)
@@ -39,24 +38,19 @@ class ProcessoSeletivo(models.Model):
     criado_em = models.DateTimeField()
 
     def __str__(self):
-        recrutador = self.id_recrutador
-        return f"{self.titulo} - {recrutador}"
+        return f"{self.titulo} - {self.recrutador}"
 
 class ProcessoTemFuncao(models.Model):
-    id_funcao = models.ForeignKey(Funcao, on_delete=models.PROTECT)
-    id_processo = models.ForeignKey(ProcessoSeletivo, on_delete=models.CASCADE)
+    funcao = models.ForeignKey(Funcao, on_delete=models.PROTECT)
+    processo = models.ForeignKey(ProcessoSeletivo, on_delete=models.CASCADE)
 
     def __str__(self):
-        funcao = self.id_funcao
-        processo = self.id_processo
-        return f"{processo.titulo} - {funcao.nome}"
+        return f"{self.processo.titulo} - {self.funcao.nome}"
 
 class CandidatoInscritoProcesso(models.Model):
-    id_candidato = models.ForeignKey(Candidato, on_delete=models.CASCADE)
-    id_processo = models.ForeignKey(ProcessoSeletivo, on_delete=models.CASCADE)
+    candidato = models.ForeignKey(Candidato, on_delete=models.CASCADE)
+    processo = models.ForeignKey(ProcessoSeletivo, on_delete=models.CASCADE)
     criado_em = models.DateTimeField()
 
     def __str__(self):
-        candidato = self.id_candidato
-        processo = self.id_processo
-        return f"{candidato.nome} - {processo.titulo}"
+        return f"{self.candidato.nome} - {self.processo.titulo}"
