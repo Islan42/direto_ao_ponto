@@ -11,15 +11,30 @@ class Candidato(models.Model):
     resumo_profissional = models.TextField()
     criado_em = models.DateTimeField()
 
+    def __str__(self):
+        return f"{self.nome}"
+
 class Funcao(models.Model):
     nome = models.CharField(max_length=100)
     descricao = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.nome
 
 class CandidatoTemFuncao(models.Model):
     id_candidato = models.ForeignKey(Candidato, on_delete=models.CASCADE)
     id_funcao = models.ForeignKey(Funcao, on_delete=models.CASCADE)
 
+    def __str__(self):
+        candidato = self.id_candidato
+        funcao = self.id_funcao
+        return f"{candidato.nome} - {funcao.nome}"
+
 class TelefoneCandidato(models.Model):
     id_candidato = models.ForeignKey(Candidato, on_delete=models.CASCADE)
     telefone = models.CharField(max_length=15)
+
+    def __str__(self):
+        candidato = self.id_candidato
+        return f"{self.telefone} - {candidato.nome}"
 

@@ -12,12 +12,19 @@ class Empresa(models.Model):
     telefone = models.CharField(max_length=15)
     criado_em = models.DateTimeField()
 
+    def __str__(self):
+        return f"{self.razao_social} - {self.cnpj}"
+
 class Recrutador(models.Model):
     id_empresa = models.ForeignKey(Empresa, on_delete=models.PROTECT)
     ativo = models.BooleanField()
     nome = models.CharField(max_length=200)
     email = models.CharField(max_length=200)
     criado_em = models.DateTimeField()
+
+    def __str__(self):
+        empresa = self.id_empresa
+        return f"{self.nome} - {empresa.razao_social}"
 
 class ProcessoSeletivo(models.Model):
     id_recrutador = models.ForeignKey(Recrutador, on_delete=models.PROTECT)
@@ -31,11 +38,25 @@ class ProcessoSeletivo(models.Model):
     remuneracao = models.DecimalField(max_digits=10, decimal_places=2, null=False)
     criado_em = models.DateTimeField()
 
+    def __str__(self):
+        recrutador = self.id_recrutador
+        return f"{self.titulo} - {recrutador}"
+
 class ProcessoTemFuncao(models.Model):
     id_funcao = models.ForeignKey(Funcao, on_delete=models.PROTECT)
     id_processo = models.ForeignKey(ProcessoSeletivo, on_delete=models.CASCADE)
+
+    def __str__(self):
+        funcao = self.id_funcao
+        processo = self.id_processo
+        return f"{processo.titulo} - {funcao.nome}"
 
 class CandidatoInscritoProcesso(models.Model):
     id_candidato = models.ForeignKey(Candidato, on_delete=models.CASCADE)
     id_processo = models.ForeignKey(ProcessoSeletivo, on_delete=models.CASCADE)
     criado_em = models.DateTimeField()
+
+    def __str__(self):
+        candidato = self.id_candidato
+        processo = self.id_processo
+        return f"{candidato.nome} - {processo.titulo}"
