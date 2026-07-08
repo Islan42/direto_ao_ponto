@@ -54,3 +54,11 @@ class CandidatoInscritoProcesso(models.Model):
 
     def __str__(self):
         return f"{self.candidato.nome} - {self.processo.titulo}"
+    
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['candidato', 'processo'],
+                name="unique_candidato_processo"
+            )
+        ]
