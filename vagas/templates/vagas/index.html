@@ -6,14 +6,17 @@
     <title>Vagas</title>
 </head>
 <body>
+    <h1>Vagas em andamento</h1>
     {% if vagas %}
         <ul>
             {% for vaga in vagas %}
                 <li>
-                    <a href="">{{vaga.titulo}}</a>
+                    <a href="{% url 'vagas:perfil_processo' vaga.id %}">{{vaga.titulo}}</a>
                 </li>
             {% endfor %}
         </ul>
+    {% else %}
+        <p>Nenhuma vaga encontrada.</p>
     {% endif %}
 </body>
 </html>

@@ -8,8 +8,24 @@
 
     <body>
         <h1>{{ candidato.nome }}</h1>
-        <p>{{ candidato.email }}</p>
-        <p>{{ candidato.cidade }}/{{ candidato.estado }}</p>
-        <p>{{ candidato.descricao }}</p>
+        <p>E-mail: {{ candidato.email }}</p>
+        {% if telefones %}
+            <p>Telefone: 
+                {% for telefone in telefones %}
+                    <span>{{ telefone }}</span>
+                {% endfor %}
+            </p>
+        {% endif %}
+        <p>Endereço: {{ candidato.cidade }}/{{ candidato.estado }}</p>
+        {% if funcoes %}
+            <h2>Busco oportunidades nas funções: </h2>
+            <ul>
+                {% for funcao in funcoes %}
+                    <li>{{ funcao }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        <h2>Resumo profissional:</h2>
+        <p>{{ candidato.resumo_profissional }}</p>
     </body>
 </html>

@@ -8,8 +8,21 @@
 
     <body>
         <h1>{{ processo.titulo }}</h1>
-        <p>{{ processo.remuneracao }}</p>
-        <p>{{ processo.cidade }}</p>
+        <p>Empresa: 
+            <a href="{% url 'vagas:perfil_empresa' processo.recrutador.empresa.id %}">
+                {{ processo.recrutador.empresa }}</p>
+            </a>
+        <p>Remuneração: R${{ processo.remuneracao }}</p>
+        <p>Localização: {{ processo.cidade }} - {{ processo.estado }}</p>
         <p>{{ processo.descricao }}</p>
+        
+        {% if funcoes %}
+            <h2>Em busca de</h2>
+            <ul>
+                {% for funcao in funcoes %}
+                    <li>{{ funcao }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
     </body>
 </html>
