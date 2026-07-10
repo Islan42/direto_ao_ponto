@@ -10,10 +10,18 @@ def index(request):
     return render(request, "recrutador/index.html", context)
 
 def perfil_recrutador(request, recrutador_id):
-    pass
+    recrutador = get_object_or_404(Recrutador, pk=recrutador_id)
+    context = {
+        "recrutador" : recrutador,
+    }
+    return render(request, "recrutador/perfil_recrutador.html", context)
 
 def perfil_empresa(request, empresa_id):
-    pass
+    empresa = get_object_or_404(Empresa, pk=empresa_id)
+    context = {
+        "empresa" : empresa,
+    }
+    return render(request, "recrutador/perfil_empresa.html", context)
 
 def perfil_processo(request, processo_id):
     processo = get_object_or_404(ProcessoSeletivo, pk=processo_id)
@@ -23,10 +31,10 @@ def perfil_processo(request, processo_id):
     return render(request, "recrutador/perfil_processo.html", context)
 
 def new_recrutador(request):
-    pass
+    return render(request, "recrutador/new_recrutador.html")
 
 def new_empresa(request):
-    pass
+    return render(request, "recrutador/new_empresa.html")
 
 def new_processo(request):
-    pass
+    return render(request, "recrutador/new_processo.html")

@@ -3,10 +3,34 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title></title>
+        <title>Recrutador: {{ recrutador.nome }}</title>
     </head>
 
     <body>
-        
+        <h1>{{ recrutador.nome }}</h1>
+        <p>Empresa:
+            <a href="{% url 'recrutador:perfil_empresa' recrutador.empresa.id %}">
+                {{ recrutador.empresa }}
+            </a>
+        </p>
+        <p>Email: {{ recrutador.email }}</p>
+
+        <h2>Processos em aberto</h2>
+        {% if recrutador.processos_ativos %}
+            <ul>
+                {% for processo in recrutador.processos_ativos %}
+                    <li>
+                        <a href="{% url 'recrutador:perfil_processo' processo.id %}">
+                            {{ processo }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Nenhum processo em aberto</p>
+        {% endif %}
+
+        <h2>Criar Novo Processo</h2>
+        <a href="{% url 'recrutador:new_processo' %}">Clique Aqui</a>
     </body>
 </html>
