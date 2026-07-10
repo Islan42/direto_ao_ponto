@@ -27,5 +27,17 @@
         {% endif %}
         <h2>Resumo profissional:</h2>
         <p>{{ candidato.resumo_profissional }}</p>
+        {% if processos %}
+            <h2>Processos inscritos:</h2>
+            <ul>
+                {% for processo in processos %}
+                    <li>
+                        <a href="{% url 'vagas:perfil_processo' processo.id %}">
+                            {{ processo }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
     </body>
 </html>
