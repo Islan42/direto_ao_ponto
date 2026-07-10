@@ -9,28 +9,28 @@
     <body>
         <h1>{{ candidato.nome }}</h1>
         <p>E-mail: {{ candidato.email }}</p>
-        {% if telefones %}
-            <p>Telefone: 
-                {% for telefone in telefones %}
-                    <span>{{ telefone }}</span>
+        {% if candidato.telefones %}
+            <p>Telefone:
+                {% for telefone in candidato.telefones %}
+                    <span> {{ telefone }}</span>
                 {% endfor %}
             </p>
         {% endif %}
         <p>Endereço: {{ candidato.cidade }}/{{ candidato.estado }}</p>
-        {% if funcoes %}
+        {% if candidato.funcoes %}
             <h2>Busco oportunidades nas funções: </h2>
             <ul>
-                {% for funcao in funcoes %}
+                {% for funcao in candidato.funcoes %}
                     <li>{{ funcao }}</li>
                 {% endfor %}
             </ul>
         {% endif %}
         <h2>Resumo profissional:</h2>
         <p>{{ candidato.resumo_profissional }}</p>
-        {% if processos %}
+        {% if candidato.processos %}
             <h2>Processos inscritos:</h2>
             <ul>
-                {% for processo in processos %}
+                {% for processo in candidato.processos %}
                     <li>
                         <a href="{% url 'vagas:perfil_processo' processo.id %}">
                             {{ processo }}

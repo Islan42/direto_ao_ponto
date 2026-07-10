@@ -9,28 +9,40 @@
     <body>
         <h1>{{ processo.titulo }}</h1>
         <p>Empresa: 
-            <a href="{% url 'recrutador:perfil_empresa' empresa.id %}">
-                {{ empresa }}</p>
+            <a href="{% url 'recrutador:perfil_empresa' processo.empresa.id %}">
+                {{ processo.empresa }}</p>
             </a>
         <p>Remuneração: R${{ processo.remuneracao }}</p>
         <p>Endereço: {{ processo.cidade }} - {{ processo.estado }}</p>
         <p>Função: 
-            {% for funcao in funcoes %}
+            {% for funcao in processo.funcoes %}
                 <span>{{ funcao }} </span>
             {% endfor %}
         </p>
         <p>Descrição: {{ processo.descricao }}</p>
 
         <h2>Candidatos inscritos:</h2>
-        {% if candidatos %}
+        {% if processo.candidatos %}
             <ul>
-                {% for candidato in candidatos %}
+                {% for candidato in processo.candidatos %}
                 <li><strong>{{ candidato }}</strong></li>
                 <ul>
                     <li>Resumo: {{candidato.resumo_profissional}}</li>
-                    <li>Telefones: </li>
+                    <li>Telefones:
+                        {% if candidato.telefones %}
+                            {% for telefone in candidato.telefones %}
+                                <span> {{ telefone }}</span>
+                            {% endfor %}
+                        {% endif %}
+                    </li>
                     <li>E-mail: {{ candidato.email }}</li>
-                    <li>Funções: </li>
+                    <li>Funções:
+                        {% if candidato.funcoes %}
+                            {% for funcao in candidato.funcoes %}
+                                <span> {{ funcao.nome }}</span>
+                            {% endfor %}
+                        {% endif %}
+                    </li>
                 </ul>    
                 {% endfor %}
             </ul>

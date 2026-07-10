@@ -14,6 +14,14 @@ class Empresa(models.Model):
 
     def __str__(self):
         return f"{self.razao_social} - {self.cnpj}"
+    
+    def processos_ativos(self):
+        recrutadores = self.recrutador_set.all()
+        arr_processos = [processo for rec in recrutadores for processo in rec.processoseletivo_set.all() if processo.ativo]
+        return arr_processos
+    
+    def recrutadores(self):
+        return self.recrutador_set.all()
 
 class Recrutador(models.Model):
     empresa = models.ForeignKey(Empresa, on_delete=models.PROTECT)
@@ -24,6 +32,9 @@ class Recrutador(models.Model):
 
     def __str__(self):
         return f"{self.nome} - {self.empresa.razao_social}"
+    
+    def processos_ativos(self):
+        return self.processoseletivo_set.filter(ativo=True)
 
 class ProcessoSeletivo(models.Model):
     recrutador = models.ForeignKey(Recrutador, on_delete=models.PROTECT)
@@ -39,6 +50,19 @@ class ProcessoSeletivo(models.Model):
 
     def __str__(self):
         return f"{self.titulo} - {self.recrutador}"
+    
+    def empresa(self):
+        return self.recrutador.empresa
+    
+    def funcoes(self):
+        processo_funcao = self.processotemfuncao_set.all()
+        arr_funcoes = [rel.funcao for rel in processo_funcao]
+        return arr_funcoes
+    
+    def candidatos(self):
+        candidato_processo = self.candidatoinscritoprocesso_set.all()
+        arr_candidatos = [rel.candidato for rel in candidato_processo]
+        return arr_candidatos
 
 class ProcessoTemFuncao(models.Model):
     funcao = models.ForeignKey(Funcao, on_delete=models.PROTECT)

@@ -17,21 +17,9 @@ def perfil_empresa(request, empresa_id):
 
 def perfil_processo(request, processo_id):
     processo = get_object_or_404(ProcessoSeletivo, pk=processo_id)
-    empresa = processo.recrutador.empresa
-    
-    processo_funcoes = processo.processotemfuncao_set.all()
-    funcoes = [rel.funcao for rel in processo_funcoes]
-
-    candidatos_processo = processo.candidatoinscritoprocesso_set.all()
-    candidatos = [rel.candidato for rel in candidatos_processo]
-
     context = {
         "processo" : processo,
-        "empresa" : empresa,
-        "funcoes" : funcoes,
-        "candidatos" : candidatos,
     }
-
     return render(request, "recrutador/perfil_processo.html", context)
 
 def new_recrutador(request):

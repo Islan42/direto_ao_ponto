@@ -13,6 +13,22 @@ class Candidato(models.Model):
 
     def __str__(self):
         return f"{self.nome}"
+    
+    def telefones(self):
+        candidato_telefone = self.telefonecandidato_set.all()
+        arr_telefones = [rel.telefone for rel in candidato_telefone]
+        return arr_telefones
+
+    def funcoes(self):
+        candidato_funcao = self.candidatotemfuncao_set.all()
+        arr_funcoes = [rel.funcao for rel in candidato_funcao]
+        return arr_funcoes
+
+    def processos(self):
+        candidato_processo = self.candidatoinscritoprocesso_set.all()
+        arr_processos = [rel.processo for rel in candidato_processo]
+        return arr_processos
+
 
 class Funcao(models.Model):
     nome = models.CharField(max_length=100)
