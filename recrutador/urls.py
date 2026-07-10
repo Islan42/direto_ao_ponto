@@ -4,10 +4,10 @@ from . import views
 app_name = "recrutador"
 urlpatterns = [
     path("", views.index, name="index"), #REDIRECT PERFIL RECRUTADOR
-    path("<int:recrutador_id>/", views.index, name="recrutador_detalhe"), #PERFIL RECRUTADOR
-    path("new/", views.index, name="recrutador_new"), #NOVO RECRUTADOR
-    path("empresa/new/", views.index, name="empresa_new"), #NOVA EMPRESA
-    path("empresa/<int:empresa_id>/", views.index, name="empresa_detalhe"), #PERFIL EMPRESA
-    path("processo/new/", views.index, name="processo_new"), #NOVO PROCESSO
-    path("processo/<int:processo_id>/", views.index, name="processo_detalhe"), #PERFIL PROCESSO
+    path("<int:recrutador_id>/", views.perfil_recrutador, name="perfil_recrutador"),
+    path("new/", views.new_recrutador, name="new_recrutador"),
+    path("empresa/<int:empresa_id>/", views.perfil_empresa, name="perfil_empresa"),
+    path("empresa/new/", views.new_empresa, name="new_empresa"),
+    path("processo/<int:processo_id>/", views.perfil_processo, name="perfil_processo"),
+    path("processo/new/", views.new_processo, name="new_processo"),
 ]

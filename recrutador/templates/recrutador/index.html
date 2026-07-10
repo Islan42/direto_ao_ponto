@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lanh="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Processos Ativos</title>
+    </head>
+
+    <body>
+        <h1>Processos Ativos</h1>
+        {% if processos %}
+            <ul>
+                {% for processo in processos %}
+                    <li>
+                        <a href="{% url 'recrutador:perfil_processo' processo.id %}">
+                            {{ processo }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Não há processos ativos no momento.</p>
+        {% endif %}
+    </body>
+</html>

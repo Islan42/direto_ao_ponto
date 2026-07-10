@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lanh="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Processo Seletivo {{ processo }}</title>
+    </head>
+
+    <body>
+        <h1>{{ processo.titulo }}</h1>
+        <p>Empresa: 
+            <a href="{% url 'recrutador:perfil_empresa' empresa.id %}">
+                {{ empresa }}</p>
+            </a>
+        <p>Remuneração: R${{ processo.remuneracao }}</p>
+        <p>Endereço: {{ processo.cidade }} - {{ processo.estado }}</p>
+        <p>Função: 
+            {% for funcao in funcoes %}
+                <span>{{ funcao }} </span>
+            {% endfor %}
+        </p>
+        <p>Descrição: {{ processo.descricao }}</p>
+
+        <h2>Candidatos inscritos:</h2>
+        {% if candidatos %}
+            <ul>
+                {% for candidato in candidatos %}
+                <li><strong>{{ candidato }}</strong></li>
+                <ul>
+                    <li>Resumo: {{candidato.resumo_profissional}}</li>
+                    <li>Telefones: </li>
+                    <li>E-mail: {{ candidato.email }}</li>
+                    <li>Funções: </li>
+                </ul>    
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Não há candidatos inscritos nesse processo.</p>
+        {% endif %}
+    </body>
+</html>
